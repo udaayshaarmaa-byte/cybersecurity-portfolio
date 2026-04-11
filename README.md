@@ -1,2 +1,5 @@
-# cybersecurity-portfolio
-Google Cybersecurity Certificate projects, notes, and labs | Networking • Linux • Python • SIEM
+# Cybersecurity Portfolio
+
+Google Cybersecurity Certificate
+
+Skills: Networking, Linux, Python, SIEM, Incident Response
