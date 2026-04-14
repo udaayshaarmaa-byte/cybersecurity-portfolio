@@ -1,0 +1,4 @@
+defensive security = monitoring and protecting systems so you can detect and stop attacks before damage happens.
+
+This was a defensive sec intro in which i have to detect and respond to attack.
+i had to identity the suspicious IP next look what they are trying to do lastly block the attacker's IP
