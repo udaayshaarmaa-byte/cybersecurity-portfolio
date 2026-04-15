@@ -17,8 +17,8 @@ Morris worm
 * developed by Robert morris in 1988 in order to acess the size of internet.
 * ​The program crawled the web and installed itself onto ​other computers to tally the number ​of computers that were connected to the internet.
 * but, failed to ​keep track of the computers it had ​already compromised and continued to re-install ​itself until the computers ran out of memory and crashed.
-* About 6,000 computers were affected, ​representing 10% of the internet at the time.
-* And costed millions of dollar in loss.
+* About 6,000 computers were affected, ​representing 10% of the internet at the time.And costed millions of dollar in loss.
+* Led to creation of CERT (Computer Emergency Response Team)
 
 
 
