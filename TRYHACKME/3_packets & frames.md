@@ -1,5 +1,5 @@
 # Packets, TCP, UDP & Ports
-**Source:** TryHackMe — Pre-Security Path (Networking Module)  
+  
 **Topic:** Packets & Frames, TCP/IP, UDP, Ports & Protocols
 
 ---
