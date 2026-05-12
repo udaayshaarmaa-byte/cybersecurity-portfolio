@@ -75,8 +75,6 @@ In this lab, I captured and analysed a full DHCP lease cycle using Wireshark on 
   - Option 54 — DHCP Server ID: `10.0.2.2`
 - Still broadcast because the client has no IP yet to receive a unicast reply.
 
-> **note:** A rogue DHCP server would respond here with a different Option 3 (gateway), redirecting all client traffic through an attacker-controlled machine, a classic DHCP spoofing / man-in-the-middle attack.
-
 ---
 
 ### Packet 4 — DHCP Request
@@ -133,12 +131,6 @@ Each DHCP session generates a fresh random Transaction ID. The Release (`0xfdcea
 - Wireshark capture file: `lab2-dhcp-capture.pcap`
 - Screenshot: Wireshark packet list showing all 5 packets (Release + DORA)
 
-
----
-
-## Reflection
-
-{This was my first time capturing DHCP traffic live and seeing the DORA handshake as actual packets rather than just a diagram. The most interesting thing for me was realising that the client genuinely has no identity at the Discover stage — it is just a MAC address shouting into the broadcast void. The VirtualBox NAT isolation issue also taught me something practical about how lab environments differ from real networks, which I will fix before Lab 3 by switching to Internal Network mode.}
 
 ---
 
