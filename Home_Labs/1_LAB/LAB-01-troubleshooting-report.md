@@ -1,13 +1,5 @@
-# Troubleshooting Report — Lab 01
+# Troubleshooting — Lab 01
 ## What Failed, What Worked & Why
-
-| Field | Details |
-|---|---|
-| **Report** | LAB-01-TROUBLESHOOTING |
-| **Date** | 2026-04-29 |
-| **Analyst** | Uday Sharma |
-| **Lab** | ARP, Ping, Firewall & Wireshark |
-
 ---
 
 ## P-01 — Kali eth1 Had No IP Address
@@ -17,9 +9,9 @@ After both VMs were booted, Ubuntu successfully pinged Kali but Kali could not b
 
 | Status | Command | Reason |
 |---|---|---|
-| ❌ Failed | `sudo ip addr add 192.168.56.102/24 dev eth1` | Assigned IP to RAM only — dropped as soon as network activity occurred |
-| ❌ Failed | `sudo dhclient eth1` | Kali's DHCP client did not receive an IP from VirtualBox DHCP on Host-Only network |
-| ✅ Worked | Static config in `/etc/network/interfaces` + `sudo systemctl restart networking` | IP written to config file — loaded on boot and network restart, survives all activity |
+| Failed | `sudo ip addr add 192.168.56.102/24 dev eth1` | Assigned IP to RAM only — dropped as soon as network activity occurred |
+| Failed | `sudo dhclient eth1` | Kali's DHCP client did not receive an IP from VirtualBox DHCP on Host-Only network |
+| Worked | Static config in `/etc/network/interfaces` + `sudo systemctl restart networking` | IP written to config file — loaded on boot and network restart, survives all activity |
 
 **Root Cause**
 Kali Linux pre-built VirtualBox image does not configure secondary network adapters automatically. eth1 requires manual static IP configuration via `/etc/network/interfaces` to be persistent.
@@ -33,9 +25,9 @@ Multiple commands were attempted to block inbound ICMP on Ubuntu. UFW and named 
 
 | Status | Command | Reason |
 |---|---|---|
-| ❌ Failed | `sudo ufw deny proto icmp from any to any` | UFW on Ubuntu 22.04 does not support `proto icmp` syntax in CLI — returns "unsupported protocol" |
-| ❌ Failed | `sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP` | Named ICMP type not consistently recognised · `-A` appends to bottom of chain, may never be reached |
-| ✅ Worked | `sudo iptables -I INPUT -p icmp --icmp-type 8 -j DROP` | Numeric type 8 universally recognised · `-I` inserts at top of chain — processed first |
+| Failed | `sudo ufw deny proto icmp from any to any` | UFW on Ubuntu 22.04 does not support `proto icmp` syntax in CLI — returns "unsupported protocol" |
+| Failed | `sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP` | Named ICMP type not consistently recognised · `-A` appends to bottom of chain, may never be reached |
+| Worked | `sudo iptables -I INPUT -p icmp --icmp-type 8 -j DROP` | Numeric type 8 universally recognised · `-I` inserts at top of chain — processed first |
 
 **Root Cause**
 UFW does not support direct ICMP blocking via CLI on Ubuntu 22.04. Named ICMP types in iptables are version-dependent. Numeric ICMP type codes are portable and reliable across all iptables versions.
@@ -49,10 +41,10 @@ Kali Linux uses nftables as its default firewall backend, not iptables. Multiple
 
 | Status | Command | Reason |
 |---|---|---|
-| ❌ Failed | `sudo iptables -I INPUT -p icmp --icmp-type 8 -j DROP` | Kali uses nftables not iptables — returns "no chain/target/match by that name" |
-| ❌ Failed | `sudo nft add rule ip filter input icmp type echo-request drop` | No existing nftables table named "filter" — returns "no such file or directory" |
-| ❌ Failed | `sudo nft add chain ip filter input { type filter hook input priority 0 \; }` | zsh interprets curly brackets as special characters — returns "parse error near the bracket" |
-| ✅ Worked | Edit `/etc/nftables.conf` directly — add `icmp type echo-request drop` inside existing input chain, then `sudo nft -f /etc/nftables.conf` | Config file already had filter table and input chain defined · Bypasses all zsh shell conflicts |
+| Failed | `sudo iptables -I INPUT -p icmp --icmp-type 8 -j DROP` | Kali uses nftables not iptables — returns "no chain/target/match by that name" |
+| Failed | `sudo nft add rule ip filter input icmp type echo-request drop` | No existing nftables table named "filter" — returns "no such file or directory" |
+| Failed | `sudo nft add chain ip filter input { type filter hook input priority 0 \; }` | zsh interprets curly brackets as special characters — returns "parse error near the bracket" |
+| Worked | Edit `/etc/nftables.conf` directly — add `icmp type echo-request drop` inside existing input chain, then `sudo nft -f /etc/nftables.conf` | Config file already had filter table and input chain defined · Bypasses all zsh shell conflicts |
 
 **Root Cause**
 Kali Linux uses nftables (not iptables) as default firewall. zsh shell conflicts with inline nftables syntax. Editing `/etc/nftables.conf` directly is the most reliable approach on Kali — avoids shell escaping issues entirely.
