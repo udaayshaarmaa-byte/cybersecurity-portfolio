@@ -1,11 +1,9 @@
 # Lab 3 — DNS Traffic Analysis with Wireshark
 
-**Home Lab Series | Stage 1 | SOC Analyst Portfolio**  
-**Date:** 09 May 2026  
+**Home Lab Series 
 **Analyst:** Uday Shaarma  
 **Environment:** Ubuntu VM (10.0.2.15) → NAT → DNS Server (192.168.31.1) → Internet  
-**Tools:** Wireshark 4.6.4, nslookup, dig | Ubuntu 26.04 on VirtualBox
-
+**Tools:** Wireshark, nslookup, dig | Ubuntu 
 ---
 
 ## Objective
@@ -57,7 +55,6 @@ Packet 4: DNS → Ubuntu    Standard query response AAAA 2404:6800:4002:823::200
 
 **What I observed:** Ubuntu sends both an A (IPv4) and AAAA (IPv6) query simultaneously. Both return valid answers — google.com supports dual-stack.
 
-> {Ubuntu automatically queries both A and AAAA for every domain. This is OS-level behaviour, not something I triggered manually.}
 
 ---
 
@@ -97,7 +94,6 @@ Packet 2: DNS → Ubuntu    Standard query response MX (multiple records)
 
 **What I observed:** Lower priority number = higher preference. Mail delivery attempts gmail-smtp-in first, then falls back to alt1 → alt4.
 
-**#** Attackers enumerate MX records when planning phishing or email spoofing. Unusual MX lookups for your own company domain from inside the network is worth investigating.
 ---
 
 ### 4. google.com — TXT Records
@@ -132,7 +128,6 @@ amazon.com    886    IN    A    98.82.161.185
 **What I observed:** Three IPs returned for one domain load balancing across distributed infrastructure. TTL of 886 seconds is normal for stable infrastructure.
 
 
-> {Amazon having 3 IPs makes sense  millions of requests per second need to be distributed. TTL tells my machine how long to cache the answer before asking again.}
 
 ---
 
@@ -168,7 +163,6 @@ Packet 33: DNS → Ubuntu    Standard query response AAAA 2620:2d:4002:1::196
 
 **#** In a real environment, analysts need to establish which DNS traffic is OS-generated versus user or application-generated. Background traffic creates noise that can mask malicious activity.
 
-> {This is why baseline captures matter. If I didn't know Ubuntu does this automatically, I might investigate it unnecessarily — or an attacker could disguise traffic to look like it.}
 
 ---
 
@@ -185,17 +179,6 @@ Packet 33: DNS → Ubuntu    Standard query response AAAA 2620:2d:4002:1::196
 | NS | Nameserver for domain | DNS hijacking detection |
 
 ---
-
-## Anomaly Detection — Normal vs Suspicious
-
-| Indicator | Normal (This Capture) | Suspicious |
-|-----------|----------------------|-----------|
-| Domain name length | Short — google.com, github.com | 50+ chars — encoded data |
-| TXT response size | 1002 bytes from known domain | 1000+ bytes from unknown domain |
-| TTL values | 886 seconds | 30–60 seconds — fast-flux C2 |
-| CNAME hops | 1 hop to known infrastructure | 3–4 hops to unknown domains |
-| Query volume | ~10 queries over lab session | 100s of TXT queries per minute |
-| DNS server | 192.168.31.1 (NAT gateway) | Unknown external resolver — bypass |
 
 ---
 
