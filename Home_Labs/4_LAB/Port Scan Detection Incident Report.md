@@ -1,4 +1,4 @@
-# Home Lab | Port Scan Detection |SOC Analyst Portfolio
+# Incident Report | Lab 4: Port Scan Detection
 
 **Analyst:** Uday Sharma
 
@@ -47,7 +47,7 @@ Suricata generated multiple alerts during the scan activity, including alerts as
 
 # 5. Findings – Defender Perspective
 
-##TRAFFIC ANALYSIS — Wireshark
+## TRAFFIC ANALYSIS — Wireshark
 Hundreds of TCP SYN packets sent from 192.168.56.102 to 192.168.56.103 in rapid succession,
 targeting sequential port numbers.
 
@@ -62,7 +62,8 @@ HTTP GET / HTTP/1.0 sent by nmap  Ubuntu responded HTTP/1.1 200 OK (text/html)
 
 Echo requests/replies visible in Wireshark nmap -A performs host discovery ping before scanning.
 
-##IDS ANALYSIS-SURICATA
+## IDS ANALYSIS-SURICATA
+Suricata's fast.log was initially empty because the IDS was not restarted after running suricata-update. Alerts only appeared after restarting Suricata.
 ET SCAN Possible Nmap User-Agent Observed-Web Application Attack-Priority(1)
 SURICATA ICMPv4 unknown code -Generic Protocol Command Decode-Priority(3)
 SURICATA Applayer Detect protocol only one direction-Generic Protocol Command Decode-Priority(3)
