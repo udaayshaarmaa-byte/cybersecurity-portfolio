@@ -13,10 +13,10 @@ A retrospective SIEM analysis was conducted on Suricata IDS telemetry captured d
 | Component | Detail |
 |-----------|--------|
 | Attacker VM | Kali Linux — 192.168.56.102 |
-| Target VM | Ubuntu 26.04 LTS — 192.168.56.103 |
+| Target VM | Ubuntu — 192.168.56.103 |
 | IDS | Suricata |
-| SIEM | Splunk Enterprise Free Tier v10.2.3 |
-| Log volume | 10,540 events (sampled: 1,000 events ingested) |
+| SIEM | Splunk Enterprise Free |
+| Log volume | 10,540 events |
 | Network | VirtualBox Host-Only Adapter (NAT + Host-Only) |
 | Lab date | 11–12 May 2026 |
 
