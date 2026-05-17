@@ -1,7 +1,5 @@
 # Lab 3 — DNS Traffic Analysis with Wireshark
-
-**Home Lab Series 
-**Analyst:** Uday Shaarma  
+ 
 **Environment:** Ubuntu VM (10.0.2.15) → NAT → DNS Server (192.168.31.1) → Internet  
 **Tools:** Wireshark, nslookup, dig | Ubuntu 
 ---
