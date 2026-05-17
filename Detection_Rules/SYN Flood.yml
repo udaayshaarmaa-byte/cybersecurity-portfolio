@@ -1,0 +1,17 @@
+title: SYN Flood Attack Detected
+status: experimental
+description: Detects an abnormal volume of TCP SYN packets targeting a DNS server, which may indicate a SYN Flood denial-of-service attack.
+logsource:
+  category: network
+  product: suricata
+detection:
+  selection:
+    dest_port: 53
+    proto: TCP
+    tcp_flags: SYN  
+  condition: selection | count(src_ip) > 100
+  timeframe: 1m
+level: high
+tags:
+  - attack.impact
+  - attack.t1498
