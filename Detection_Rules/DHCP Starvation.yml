@@ -16,6 +16,6 @@ falsepositives:
   - Network misconfiguration causing DHCP floods
 level: high
 tags:
-  - tactic.impact
-  -technique.network denial of service
-  -technique Id.t1498
+  - attack.impact
+  - attack.network denial of service
+  - attack.t1498
