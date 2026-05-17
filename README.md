@@ -37,11 +37,6 @@ Every lab has a incident report.
 | Operating Systems | Linux (Kali, Ubuntu), Bash |
 | Programming | Python, basics of scripting |
 | Documentation | SOC-style incident reports |
-
-
-- LinkedIn: [Uday Sharma](https://www.linkedin.com/in/uday-sharma)
-- Portfolio: [github.com/udaayshaarmaa-byte/cybersecurity-portfolio](https://github.com/udaayshaarmaa-byte/cybersecurity-portfolio)
-
 ---
 
 *Still learning. Still building.*
