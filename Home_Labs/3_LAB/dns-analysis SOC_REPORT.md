@@ -68,9 +68,6 @@ Packet 4: DNS → Ubuntu    Standard query response AAAA SOA ns-1707.awsdns-21.c
 **What I observed:** github.com has an IPv4 address (20.207.73.82) but no IPv6. When AAAA was queried, the DNS server returned a SOA (Start of Authority) record instead  meaning "I'm authoritative for this domain and no IPv6 record exists."
 
 **#** Any AAAA traffic directed TO github.com from inside a network would be suspicious since the domain has no IPv6.
-
-> {SOA = the DNS server saying "I own this domain and I'm telling you no IPv6 here." It's a definitive negative answer, not a timeout.}
-
 ---
 
 ### 3. gmail.com — MX Records
@@ -104,9 +101,6 @@ Packet 2: DNS → Ubuntu    Standard query response TXT (1002 bytes — multiple
 **What I observed:** Response was 1002 bytes significantly larger than all other query responses. TXT records contained SPF, DKIM keys, and domain verification strings.
 
 **#** TXT records are the primary vector for DNS tunnelling. Attackers encode stolen data inside TXT record responses to exfiltrate it through DNS, which is rarely blocked by firewalls. A 1002-byte TXT response from an unknown domain would be a major red flag.
-
-> {This is why the Sigma rule targets TXT records specifically. Legitimate TXT lookups like SPF/DKIM checks happen occasionally — hundreds per minute from an unknown domain means something is being exfiltrated.}
-
 ---
 
 ### 5. amazon.com — A Record with Load Balancing
@@ -146,8 +140,6 @@ ipv6.l.google.com    225    IN    AAAA     2404:6800:4002:82a::200e
 
 **#** CNAME chaining is used by attackers to redirect C2 traffic through multiple domains, making it harder to identify and block the real server. Multiple CNAME hops to unknown domains = red flag.
 
-> {CNAME is basically a domain alias. google.com uses it for internal infrastructure management. Attackers use it to hide behind legitimate-looking domain chains.}
-
 ---
 
 ### 7. connectivity-check.ubuntu.com — Background Traffic
@@ -158,8 +150,6 @@ Packet 33: DNS → Ubuntu    Standard query response AAAA 2620:2d:4002:1::196
 ```
 
 **What I observed:** I didn't trigger this query. Ubuntu automatically runs connectivity checks in the background. This appeared in my capture without any terminal commands.
-
-**#** In a real environment, analysts need to establish which DNS traffic is OS-generated versus user or application-generated. Background traffic creates noise that can mask malicious activity.
 
 
 ---
@@ -175,9 +165,6 @@ Packet 33: DNS → Ubuntu    Standard query response AAAA 2620:2d:4002:1::196
 | TXT | Arbitrary text data | HIGH — DNS tunnelling vector |
 | SOA | Authoritative nameserver info | Negative answer — record doesn't exist |
 | NS | Nameserver for domain | DNS hijacking detection |
-
----
-
 ---
 
 
