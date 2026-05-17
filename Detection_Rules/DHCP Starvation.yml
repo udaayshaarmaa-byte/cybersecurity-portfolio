@@ -1,0 +1,21 @@
+title: DHCP Starvation Attack Detected
+status: experimental
+description: Detects a high volume of DHCP Discover messages
+  from a single source MAC address, indicating a possible
+  DHCP starvation attack aimed at exhausting the IP address pool.
+logsource:
+  category: network
+  product: suricata
+detection:
+  selection:
+    event_type: dhcp
+    dhcp.type: discover
+  condition: selection | count(src_mac) by src_mac > 20
+falsepositives:
+  - Legitimate DHCP clients renewing leases rapidly
+  - Network misconfiguration causing DHCP floods
+level: high
+tags:
+  - tactic.impact
+  -technique.network denial of service
+  -technique Id.t1498
