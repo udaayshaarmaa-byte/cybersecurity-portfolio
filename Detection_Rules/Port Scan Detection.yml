@@ -6,7 +6,7 @@ logsource:
   product: suricata
 detection:
   selection:
-    event.type: flow
+    event_type: flow
     proto: TCP
     tcp_flags: SYN
   condition: selection | count(dest_port) by src_ip > 20
