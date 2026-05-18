@@ -1,6 +1,6 @@
 title: Port Scan threat Detection
 status: experimental
-description: Detects a possible port scan by identifying high volume of TCP SYN scan from a single source. Attackers try to search for open ports by sending SYN request to all available ports to find an entry to infiltrate into system.
+description: Detects a possible port scan by identifying high volume of TCP SYN scan from a single source. Attackers may use port scanning to discover exposed services on target systems.
 logsource:
   category: network
   product: suricata
