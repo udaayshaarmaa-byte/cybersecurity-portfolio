@@ -1,0 +1,18 @@
+title: Port Scan threat Detection
+status: experimental
+description: Detects a possible port scan by identifying high volume of TCP SYN scan from a single source. Attackers try to search for open ports by sending SYN request to all available ports to find an entry to infiltrate into system.
+logsource:
+  category: network
+  product: suricata
+detection:
+  selection:
+    event.type: flow
+    proto: TCP
+    tcp_flags: SYN
+  condition: selection | count(dest_port) by src_ip > 20
+falsepositives:
+  - Legitimate high-volume network scanning tool
+level: high
+tags:
+  - attack.discovery
+  - attack.t1046
