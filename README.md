@@ -9,7 +9,7 @@ I started from scratch — no IT background, no shortcuts. Everything here is se
 ## What I'm working on
 
 - **Google Cybersecurity Certificate**
-- **Home lab series** — 5 labs complete, running on VirtualBox (Kali + Ubuntu)
+- **Home lab series** — 6 labs complete, running on VirtualBox (Kali + Ubuntu)
 - **TryHackMe**
 
 ---
@@ -23,6 +23,7 @@ I started from scratch — no IT background, no shortcuts. Everything here is se
 | Lab 3 | DNS Traffic Analysis | Wireshark, dig |
 | Lab 4 | Port Scan Detection | nmap, Suricata, Wireshark |
 | Lab 5 | Log Analysis & SIEM Triage | Splunk, Suricata, SPL |
+| Lab 6 | Brute force Attack and Detection | Splunk, SPL, Fail2ban, Hydra |
 
 Every lab has a incident report.
 
