@@ -4,7 +4,6 @@ description: >
   Detects multiple failed SSH authentication attempts from a single
   source IP within a short timeframe, indicating a brute force attack.
 author: Uday Sharma
-date: 2026/05/23
 logsource:
     product: linux
     service: auth
