@@ -2,8 +2,8 @@
 ---
 | Field | Details |
 | **Analyst** | Uday Sharma |
-| **Source Host** | 192.168.56.103 — Ubuntu 22.04 |
-| **Target Host** | 192.168.56.102 — Kali Linux |
+| **Source Host** | 192.168.56.103  Ubuntu 22.04 |
+| **Target Host** | 192.168.56.102  Kali Linux |
 | **Protocol** | ICMP / ARP |
 
 ---
