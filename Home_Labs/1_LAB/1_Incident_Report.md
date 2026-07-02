@@ -1,5 +1,5 @@
 # SOC Incident Report
-
+---
 | Field | Details |
 | **Analyst** | Uday Sharma |
 | **Source Host** | 192.168.56.103 — Ubuntu 22.04 |
@@ -27,19 +27,6 @@ During Lab 01, ICMP echo requests (ping sweeps) were exchanged between Kali Linu
 | Phase 5 | Firewall block applied on Kali | nftables rule added to `/etc/nftables.conf` · Ubuntu ping to Kali: 100% loss |
 | Phase 6 | Wireshark packet capture on eth1 | ICMP request/reply captured · Firewall block confirmed via zero reply packets · "no response found" flagged |
 | Phase 7 | All rules removed — connectivity restored | Both hosts confirmed 0% packet loss · Capture saved · Report filed |
-
----
-
-## Evidence
-
-| ID | Description | Tool | Severity |
-|---|---|---|---|
-| E-001 | `ip a` output both VMs showing NAT and Host-Only IPs | `ip a` | INFO |
-| E-002 | Successful ping both directions  0% packet loss | `ping` | INFO |
-| E-003 | ARP table  Ubuntu showing Kali MAC and VirtualBox gateway | `arp -a` | MEDIUM |
-| E-004 | Wireshark ICMP request/reply sequence  normal traffic | Wireshark | MEDIUM |
-| E-005 | Wireshark one-sided ICMP  "no response found" post firewall block | Wireshark | MEDIUM |
-| E-006 | iptables rule active on Ubuntu  ICMP DROP confirmed | `iptables -L` | LOW |
 
 ---
 
