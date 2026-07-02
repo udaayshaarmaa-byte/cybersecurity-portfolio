@@ -49,23 +49,4 @@ Both hosts confirmed 0% packet loss after rule removal demonstrating clean firew
 
 ---
 
-## ASD Essential Eight Mapping
-
-| Control | Maturity Level | Relevance |
-|---|---|---|
-| Application Control | ML1 | iptables and nftables blocking ICMP controlling which protocols reach each host |
-| Network Segmentation | ML1 | Host-Only adapter isolates all lab traffic mimics real network zone separation |
-| Incident Response | ML2 | Wireshark used for live packet capture, traffic analysis and post-incident evidence |
-
----
-
-## Sign-off
-
-| Role | Name |
-|---|---|
-| Analyst | Uday Sharma · Junior SOC Analyst |
-| Reviewed By | Pending · Senior Analyst |
-
----
-
 *cybersecurity-portfolio · udaayshaarmaa-byte · Lab 01*
