@@ -10,7 +10,7 @@
 
 ## Summary
 
-During Lab 01, ICMP echo requests (ping sweeps) were exchanged between Kali Linux (192.168.56.102) and Ubuntu (192.168.56.103) across an isolated VirtualBox Host-Only network. ARP resolution was observed prior to all ICMP activity confirming standard Layer 2/3 behaviour. Firewall rules were applied on both hosts — Ubuntu using `iptables` and Kali using `nftables` — to block inbound ICMP. Wireshark packet capture confirmed successful enforcement via one-sided ICMP traffic with zero reply packets. All rules were subsequently removed and connectivity restored
+During Lab 01, ICMP echo requests (ping sweeps) were exchanged between Kali Linux (192.168.56.102) and Ubuntu (192.168.56.103) across an isolated VirtualBox Host-Only network. ARP resolution was observed prior to all ICMP activity confirming standard Layer 2/3 behaviour. Firewall rules were applied on both hosts Ubuntu using `iptables` and Kali using `nftables`  to block inbound ICMP. Wireshark packet capture confirmed successful enforcement via one-sided ICMP traffic with zero reply packets. All rules were subsequently removed and connectivity restored
 
 ---
 ---
@@ -34,31 +34,31 @@ During Lab 01, ICMP echo requests (ping sweeps) were exchanged between Kali Linu
 
 | ID | Description | Tool | Severity |
 |---|---|---|---|
-| E-001 | `ip a` output — both VMs showing NAT and Host-Only IPs | `ip a` | INFO |
-| E-002 | Successful ping both directions — 0% packet loss | `ping` | INFO |
-| E-003 | ARP table — Ubuntu showing Kali MAC and VirtualBox gateway | `arp -a` | MEDIUM |
-| E-004 | Wireshark ICMP request/reply sequence — normal traffic | Wireshark | MEDIUM |
-| E-005 | Wireshark one-sided ICMP — "no response found" post firewall block | Wireshark | MEDIUM |
-| E-006 | iptables rule active on Ubuntu — ICMP DROP confirmed | `iptables -L` | LOW |
+| E-001 | `ip a` output both VMs showing NAT and Host-Only IPs | `ip a` | INFO |
+| E-002 | Successful ping both directions  0% packet loss | `ping` | INFO |
+| E-003 | ARP table  Ubuntu showing Kali MAC and VirtualBox gateway | `arp -a` | MEDIUM |
+| E-004 | Wireshark ICMP request/reply sequence  normal traffic | Wireshark | MEDIUM |
+| E-005 | Wireshark one-sided ICMP  "no response found" post firewall block | Wireshark | MEDIUM |
+| E-006 | iptables rule active on Ubuntu  ICMP DROP confirmed | `iptables -L` | LOW |
 
 ---
 
 ## Technical Findings
 
 **F1 — ARP precedes ICMP**
-ARP resolution preceded all ICMP activity — Wireshark confirmed the ARP handshake completed before any ping packet was transmitted. Standard Layer 2/3 behaviour but confirms active host discovery occurs before sweep.
+ARP resolution preceded all ICMP activity Wireshark confirmed the ARP handshake completed before any ping packet was transmitted. Standard Layer 2/3 behaviour but confirms active host discovery occurs before sweep.
 
 **F2 — Passive network discovery via ARP**
 Ubuntu ARP table revealed three Host-Only network participants beyond the target: VirtualBox gateway (192.168.56.1), DHCP server (192.168.56.100), and Kali (192.168.56.102). This passive network discovery requires no active scanning.
 
 **F3 — Different firewall systems across distros**
-Ubuntu and Kali use different firewall systems — `iptables` on Ubuntu vs `nftables` on Kali. Commands are not interchangeable between systems. Numeric ICMP type codes (type 8) proved more reliable than named types (echo-request) across both systems.
+Ubuntu and Kali use different firewall systems `iptables` on Ubuntu vs `nftables` on Kali. Commands are not interchangeable between systems. Numeric ICMP type codes (type 8) proved more reliable than named types (echo-request) across both systems.
 
 **F4 — One-sided ICMP as firewall signature**
-Wireshark confirmed firewall enforcement via one-sided ICMP — outbound requests visible, zero reply packets returned. Wireshark automatically flagged each unanswered request as "no response found" — a definitive firewall block signature.
+Wireshark confirmed firewall enforcement via one-sided ICMP  outbound requests visible, zero reply packets returned. Wireshark automatically flagged each unanswered request as "no response found" a definitive firewall block signature.
 
 **F5 — Clean firewall rule lifecycle**
-Both hosts confirmed 0% packet loss after rule removal — demonstrating clean firewall rule lifecycle: apply → verify → remove → restore. This is the standard change management process for firewall rules in production environments.
+Both hosts confirmed 0% packet loss after rule removal demonstrating clean firewall rule lifecycle: apply → verify → remove → restore. This is the standard change management process for firewall rules in production environments.
 
 ---
 
@@ -66,8 +66,8 @@ Both hosts confirmed 0% packet loss after rule removal — demonstrating clean f
 
 | Control | Maturity Level | Relevance |
 |---|---|---|
-| Application Control | ML1 | iptables and nftables blocking ICMP — controlling which protocols reach each host |
-| Network Segmentation | ML1 | Host-Only adapter isolates all lab traffic — mimics real network zone separation |
+| Application Control | ML1 | iptables and nftables blocking ICMP controlling which protocols reach each host |
+| Network Segmentation | ML1 | Host-Only adapter isolates all lab traffic mimics real network zone separation |
 | Incident Response | ML2 | Wireshark used for live packet capture, traffic analysis and post-incident evidence |
 
 ---
